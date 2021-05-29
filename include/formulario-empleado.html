@@ -1,0 +1,128 @@
+<div class="row">
+    <h1>Crear empleado</h1>
+    <div class="alert alert-info">Los campos con asteriscos (*) son obligatorios</div>
+    <form id="crear-empleado-form">
+
+        <div class="form-group">
+            <label for="nombre-completo">Nombre completo *</label>
+            <input type="text" class="form-control" id="nombre-completo" placeholder="Nombre completo del empleado"
+                required value="Fredy Gonzalez">
+            <!--  aria-describedby="emailHelp" -->
+            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+        </div>
+
+        <div class="form-group">
+            <label for="email">Correo electrónico *</label>
+            <input type="email" class="form-control" id="email" placeholder="Correo electrónico" required
+                value="fredgonz7@gmail.com">
+        </div>
+
+        <div class="form-group">
+            <label for="sexo">Sexo *</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="sexoM" checked>
+                <label class="form-check-label" for="flexRadioDefault1">
+                    Masculino
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="sexoF">
+                <label class="form-check-label" for="flexRadioDefault2">
+                    Femenino
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="area">Area *</label>
+            <select class="form-select" aria-label="Default select example" id="usuario-tipo-usuario" required>
+                <option selected></option>
+                <option value="Administración" selected>Administración</option>
+                <option value="Secretaría">Secretaría</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="descripcion">Descripción *</label>
+            <textarea class="form-control" id="descripcion" rows="3" required>Prueba</textarea>
+        </div>
+
+        <div class="form-group">
+            <input class="form-check-input" type="checkbox" value="" id="boletin">
+            <label class="form-check-label" for="boletin">
+                Deseo recibir boletín informativo
+            </label>
+        </div>
+
+        <!-- <div class="mb-3 row">
+            
+            <div class="col-sm-10">
+                
+            </div>
+        </div> -->
+
+        <div class="mb-3 row">
+            <label for="">Roles*</label>
+            <div class="col-sm-10">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="rol1">
+                    <label class="form-check-label" for="rol1">
+                        Profesional de proyectos- Desarrollador
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="rol2">
+                    <label class="form-check-label" for="rol2">
+                        Gerente estratégico
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="rol3">
+                    <label class="form-check-label" for="rol3">
+                        Auxiliar administratico
+                    </label>
+                </div>
+            </div>
+        </div>
+        <!-- 
+        <div class="form-group">
+            <label for="">Roles*</label>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="rol1">
+                <label class="form-check-label" for="rol1">
+                    Profesional de proyectos- Desarrollador
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="rol2">
+                <label class="form-check-label" for="rol2">
+                    Gerente estratégico
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="rol3">
+                <label class="form-check-label" for="rol3">
+                    Auxiliar administratico
+                </label>
+            </div>
+        </div>
+        -->
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+
+<script src="../js/empleado.js"></script>
+
+<script>
+    document.getElementById("crear-empleado-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+        crear_empleado_form();
+    });
+    function crear_empleado_form() {
+
+        alert("mango")
+    }
+
+</script>
