@@ -42,7 +42,7 @@ class Empleado
         } else {
             return json_encode(array('estado' => "1", 'mensaje' => "El empleado fue agregado"));
         }
-        
+
         /*if (($email = $nuevo_registro["email"] ?? false)
             && (!empty($nuevo_registro["email"]))
         ) {
@@ -86,7 +86,6 @@ class Empleado
             else
                 return json_encode(array("estado" => "0", "mensaje" => "El empleado no fue actualizado"));
         }
-
     }
 
     /**
@@ -135,7 +134,12 @@ class Empleado
      */
     function listar_empleados()
     {
-        $query = "SELECT * FROM empleados";
+        // $query = "SELECT * FROM empleados";
+        $query = "SELECT  empleados.id, empleados.nombre, empleados.email, empleados.sexo, 
+            areas.nombre as area_id, empleados.boletin, empleados.descripcion 
+            FROM  empleados
+            LEFT JOIN areas ON empleados.area_id = areas.id";
+
         $consulta = $this->conexion->prepare($query);
         $consulta->execute();
         $empleados = $consulta->fetchAll(PDO::FETCH_OBJ);
@@ -159,5 +163,4 @@ class Empleado
         // var_dump($consulta);
         return $consulta;
     }
-
 }

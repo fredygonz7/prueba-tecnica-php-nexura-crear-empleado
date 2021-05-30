@@ -74,7 +74,7 @@ function mostrar_empleados_lista_callback(parametroJSON) {
                 if (element == "boletin") {
                     if (locobj.datos[i][element] == "1")
                         text = document.createTextNode("Si");
-                    else if (locobj.datos[i][element] == "1")
+                    else if (locobj.datos[i][element] == "0")
                         text = document.createTextNode("No");
                 }
                 td.appendChild(text);
@@ -82,27 +82,27 @@ function mostrar_empleados_lista_callback(parametroJSON) {
                 // fila.appendChild(document.createElement("td").appendChild(document.createTextNode(locobj.datos[i][element])));
             });
 
-            let columnaBoton = document.createElement("td");
+            let columnaModificar = document.createElement("td");
             let aEditar = document.createElement("a");
-            let textoEditar = document.createTextNode("Modificar");
+            let iModificar = document.createElement("i");
+            iModificar.setAttribute("class", "fas fa-edit");
             aEditar.href = "#";
-            aEditar.appendChild(textoEditar);
+            aEditar.appendChild(iModificar);
             aEditar.setAttribute("data-empleado", locobj.datos[i].id);
             aEditar.onclick = function () { consultar_empleado_para_modificar(this) };
-            // columnaBoton.className = "cursor_pointer";
-            columnaBoton.appendChild(aEditar);
-            // fila.appendChild(columnaBoton);
-
-            // let columnaBoton = document.createElement("td");
+            columnaModificar.appendChild(aEditar);
+            fila.appendChild(columnaModificar);
+            
+            let columnaEliminar = document.createElement("td");
             let aEliminar = document.createElement("a");
-            let textoEliminar = document.createTextNode("Eliminar");
+            let iEliminar = document.createElement("i");
+            iEliminar.setAttribute("class", "fas fa-trash-alt");
             aEliminar.href = "#";
-            aEliminar.appendChild(textoEliminar);
+            aEliminar.appendChild(iEliminar);
             aEliminar.setAttribute("data-empleado", locobj.datos[i].id);
             aEliminar.onclick = function () { eliminar_empleado(this) };
-            // columnaBoton.className = "cursor_pointer";
-            columnaBoton.appendChild(aEliminar);
-            fila.appendChild(columnaBoton);
+            columnaEliminar.appendChild(aEliminar);
+            fila.appendChild(columnaEliminar);
 
             tbody.appendChild(fila);
         }
@@ -218,8 +218,9 @@ function eliminar_empleado(element) {
 function respuesta_eliminar_empleado(parametroJSON) {
     try {
         locobj = JSON.parse(parametroJSON);
-        if (locobj.estado == "1") mostrar_lista_empleados_inicio();
-        else alert(locobj.mensaje);
+        if (locobj.estado == "1")
+            mostrar_lista_empleados_inicio();
+        alert(locobj.mensaje);
 
     } catch (error) {
         alert("Datos inesperados del servidor");
@@ -305,6 +306,7 @@ function modificar_empleado_form() {
     }
 }
 function respuesta_modificar_empleado(parametroJSON) {
+    console.log("parametroJSON",parametroJSON);
     try {
         locobj = JSON.parse(parametroJSON);
         if (locobj.estado == "1") {

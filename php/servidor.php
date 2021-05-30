@@ -10,7 +10,7 @@ include_once 'clajson.php';
 if (isset($_POST['parjson']) && !empty($_POST['parjson'])) {
 
     $locobj = json_decode($_POST['parjson']);
-  
+    
     if (!isset($objjson)) $objjson = new clajson();
     if ($objeto = $locobj->objeto ?? false) {
         switch ($objeto) {
