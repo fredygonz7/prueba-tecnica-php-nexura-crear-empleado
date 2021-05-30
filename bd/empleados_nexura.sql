@@ -21,11 +21,18 @@ CREATE TABLE IF NOT EXISTS `areas` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador del area',
   `nombre` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla empleados_nexura.areas: ~0 rows (aproximadamente)
 DELETE FROM `areas`;
 /*!40000 ALTER TABLE `areas` DISABLE KEYS */;
+INSERT INTO `areas` (`id`, `nombre`) VALUES
+	(1, 'Administracion'),
+	(2, 'Secretaria'),
+	(3, 'Recursos humanos'),
+	(4, 'Produccion'),
+	(5, 'Finanzas'),
+	(6, 'Marketing y ventas');
 /*!40000 ALTER TABLE `areas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla empleados_nexura.empleados
@@ -38,24 +45,21 @@ CREATE TABLE IF NOT EXISTS `empleados` (
   `boletin` int(11) NOT NULL,
   `descripcion` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla empleados_nexura.empleados: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla empleados_nexura.empleados: ~15 rows (aproximadamente)
 DELETE FROM `empleados`;
 /*!40000 ALTER TABLE `empleados` DISABLE KEYS */;
 INSERT INTO `empleados` (`id`, `nombre`, `email`, `sexo`, `area_id`, `boletin`, `descripcion`) VALUES
-	(1, 'Fredy Gonzalez', 'fredgonz7@gmail.com', 'M', 1, 0, 'Prueba'),
-	(2, 'Fredy Gonzalez', 'fredgonz7@gmail.com', 'M', 1, 1, 'Prueba'),
-	(3, 'David Gonzalez', 'fredg@gmail.com', 'M', 2, 1, 'Prueba'),
-	(4, 'Fredy Gonzalez', 'fredgonz7@gmail.com', 'M', 1, 1, 'Prueba'),
-	(5, 'Fredy Gonzalez', 'fredgonz7@gmail.com', 'M', 1, 1, 'Prueba'),
-	(6, 'Fredy Gonzalez', 'fredgonz7@gmail.com', 'M', 1, 1, 'Prueba'),
-	(7, 'Fredy Gonzalez', 'fredgonz7@gmail.com', 'M', 1, 1, 'Prueba'),
-	(8, 'Fredy Gonzalez', 'fredgonz7@gmail.com', 'M', 1, 1, 'Prueba'),
-	(9, 'Fredy Gonzalez', 'fredgonz7@gmail.com', 'M', 1, 1, 'Prueba'),
-	(10, 'Fredy Gonzalez', 'fredgonz7@gmail.com', 'M', 1, 1, 'Prueba'),
+	(1, 'Fredy Gonzalez Monterroza', 'fredgonz7@gmail.com', 'M', 1, 1, 'Prueba'),
+	(2, 'Neira Mercado', 'mercado@gmail.com', 'F', 3, 0, 'Prueba'),
+	(3, 'Juana Martinez', 'juena@gmail.com', 'F', 2, 1, 'Prueba'),
 	(11, 'Fredy Gonzalez', 'fredgonz7@gmail.com', 'M', 1, 1, 'Prueba'),
-	(12, 'Fredy Gonzalez', 'fredgonz7@gmail.com', 'M', 1, 1, 'Prueba');
+	(12, 'Fredy Gonzalez', 'fredgonz7@gmail.com', 'M', 1, 1, 'Prueba'),
+	(13, 'Fredy Gon', 'fredgonz7@gmail.com', 'M', 1, 1, 'Prueba'),
+	(15, 'Neira Mercado', 'neira.mercado7@gmail.com', 'F', 2, 1, 'Prueba'),
+	(16, 'Neira', 'neira.mercado7@gmail.com', 'F', 5, 0, 'prueba'),
+	(17, 'fredy', 'fredgonz7@gmail.com', 'M', 4, 0, '1223');
 /*!40000 ALTER TABLE `empleados` ENABLE KEYS */;
 
 -- Volcando estructura para tabla empleados_nexura.empleado_rol
