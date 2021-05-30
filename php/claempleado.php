@@ -70,15 +70,16 @@ class Empleado
      * actualizar function
      *
      * @param [array] $registro
+     * @param number $id
      * @return json
      */
-    public function actualizar($registro)
+    public function actualizar($registro, $id)
     {
-        if ($this->buscar_empleado($registro[0])->fetch() === false) {
+        if ($this->buscar_empleado($id)->fetch() === false) {
             return json_encode(array('estado' => "0", 'mensaje' => "El empleado no existe"));
         } else {
 
-            $consulta = $this->conexion->prepare("UPDATE empleados SET nombre = ?, email = ?, sexo = ?, area=? , descripcion = ?, boletin=? WHERE id = ?;");
+            $consulta = $this->conexion->prepare("UPDATE empleados SET nombre = ?, email = ?, sexo = ?, area_id=? , descripcion = ?, boletin=? WHERE id = $id;");
             $resultado = $consulta->execute($registro);
             if ($resultado === TRUE)
                 return json_encode(array("estado" => "1", "mensaje" => "Empleado actualizado correctamente"));
@@ -107,6 +108,24 @@ class Empleado
             else
                 return json_encode(array("estado" => "0", "mensaje" => "El empleado no fue eliminado"));
         }
+    }
+
+    /**
+     * leer function
+     *
+     * metodo que consulta o lee un usuario
+     * 
+     * @param [string] $id
+     * @return json
+     */
+    public function leer($id)
+    {
+        $registro = $this->buscar_empleado($id)->fetch(PDO::FETCH_OBJ);
+
+        if (empty($registro)) {
+            return json_encode(array("estado" => "0", "mensaje" => "El registro no existe"));
+        }
+        return json_encode(array('estado' => "1", 'mensaje' => "Consulta realizada", 'datos' => $registro));
     }
 
     /**

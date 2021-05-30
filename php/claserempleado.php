@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ClaSerEmplado class 
+ * ClaSerEmpleado class 
  * 
  * clase que contiene un metodo, el cual se encarga de recibir todas las peticiones relacionas con los empleados
  */
@@ -32,35 +32,35 @@ class ClaSerEmpleado
 
         include_once("claempleado.php");
         if (!isset($empleado)) {
-            $emplado = new Empleado($conexionPDO);
+            $empleado = new Empleado($conexionPDO);
         }
         switch ($locobj->metodo) {
             case "crear":
                 $registro = array(
-                    "nombre" => $locobj->nombre,
-                    "email" => $locobj->email,
-                    "sexo" => $locobj->sexo,
-                    "area_id" => $locobj->area,
-                    "descripcion" => $locobj->descripcion,
-                    "boletin" => $locobj->boletin
+                    "nombre"        => $locobj->campos->nombre,
+                    "email"         => $locobj->campos->email,
+                    "sexo"          => $locobj->campos->sexo,
+                    "area_id"       => $locobj->campos->area,
+                    "descripcion"   => $locobj->campos->descripcion,
+                    "boletin"       => $locobj->campos->boletin
                 );
-                return $emplado->crear($registro);
+                return $empleado->crear($registro);
                 break;
                 
             case "actualizar":
-                if ((isset($locobj->id))
-                    && (!empty($locobj->id))
+                if ((isset($locobj->campos->id))
+                    && (!empty($locobj->campos->id))
                 ) {
                     $registro = array(
-                        $locobj->id,
-                        $locobj->nombre,
-                        $locobj->email,
-                        $locobj->sexo,
-                        $locobj->area,
-                        $locobj->descripcion,
-                        $locobj->boletin
+                        $locobj->campos->nombre,
+                        $locobj->campos->email,
+                        $locobj->campos->sexo,
+                        $locobj->campos->area,
+                        $locobj->campos->descripcion,
+                        $locobj->campos->boletin
                     );
-                    return $emplado->actualizar($registro);
+                    return $empleado->actualizar($registro,
+                        $locobj->campos->id);
                 } else {
                     return json_encode(array("estado" => "0", "mensaje" => "Error, datos no esperados"));
                 }
@@ -69,13 +69,24 @@ class ClaSerEmpleado
                 if ((isset($locobj->id))
                     && (!empty($locobj->id))
                 ) {
-                    return $emplado->eliminar($locobj->id);
+                    return $empleado->eliminar($locobj->id);
                 } else {
                     return json_encode(array("estado" => "0", "mensaje" => "Error, datos no esperados"));
                 }
                 break;
+
+            case "leer":
+                if ((isset($locobj->id))
+                    && (!empty($locobj->id))
+                ) {
+                    return $empleado->leer($locobj->id);
+                } else {
+                    return json_encode(array("estado" => "0", "mensaje" => "Error, datos no esperados"));
+                }
+                break;
+
             case "listar_empleados":
-                return $emplado->listar_empleados();
+                return $empleado->listar_empleados();
                 break;
             default:
                 return json_encode(array('estado' => "0", 'mensaje' => "Error, metodo"));
