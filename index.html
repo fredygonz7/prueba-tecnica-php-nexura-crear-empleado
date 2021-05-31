@@ -6,13 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Empleados</title>
-    <!-- <link href="css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous"> -->
-    <!-- Bootstrap CSS -->
+    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="font/fontawesome-free-5.15.3-web/css/all.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
@@ -20,41 +18,11 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#" id="inicio">Inicio</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <!-- <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Home</a>
-                            </li> -->
-                        <li class="nav-item">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#formularioModal" onclick="mostrar_formulario()">
-                                Nuevo
-                            </button>
-                            <!-- <a class="nav-link" href="#" id="mostrar-formulario-empleado">Nuevo</a> -->
-                        </li>
-                        <!-- <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    Dropdown
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                </ul>
-                            </li> -->
-                        <!-- <li class="nav-item">
-                                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                            </li> -->
-                    </ul>
+                <div class="d-flex">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#formularioModal" onclick="mostrar_formulario()">
+                        <i class="fas fa-user-plus"></i> Crear
+                    </button>
                 </div>
             </div>
         </nav>
@@ -65,11 +33,11 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Sexo</th>
-                        <th scope="col">Area</th>
-                        <th scope="col">Boletin</th>
+                        <th scope="col"><i class="fas fa-user"></i> Nombre</th>
+                        <th scope="col"><i class="fas fa-at"></i> Email</th>
+                        <th scope="col"><i class="fas fa-venus-mars"></i> Sexo</th>
+                        <th scope="col"><i class="fas fa-briefcase"></i> Area</th>
+                        <th scope="col"><i class="fas fa-envelope"></i> Boletin</th>
                         <th scope="col">Modificar</th>
                         <th scope="col">Eliminar</th>
                     </tr>
@@ -95,8 +63,8 @@
                         <form id="crear-empleado-form">
 
                             <div class="form-group">
-                                <label for="nombre-completo">Nombre completo *</label>
-                                <input type="text" class="form-control" id="nombre-completo"
+                                <label for="nombre">Nombre completo *</label>
+                                <input type="text" class="form-control" name="nombre" id="nombre"
                                     placeholder="Nombre completo del empleado" required>
                                 <!--  aria-describedby="emailHelp" -->
                                 <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
@@ -104,7 +72,7 @@
 
                             <div class="form-group">
                                 <label for="email">Correo electrónico *</label>
-                                <input type="email" class="form-control" id="email" placeholder="Correo electrónico"
+                                <input type="email" class="form-control" name="email" id="email" placeholder="Correo electrónico"
                                     required>
                             </div>
 
@@ -115,19 +83,22 @@
                                     </div>
                                     <div class="col-sm-10">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="sexoM" checked>
+                                            <input class="form-check-input" type="radio" name="sexo"
+                                                id="sexoM">
                                             <label class="form-check-label" for="sexoM">
                                                 Masculino
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="sexoF">
+                                            <input class="form-check-input" type="radio" name="sexo"
+                                                id="sexoF">
                                             <label class="form-check-label" for="sexoF">
                                                 Femenino
                                             </label>
                                         </div>
+                                        <label id="sexo-error" class="error" for="sexo"></label>
                                     </div>
-                                </div>                                
+                                </div>
                             </div>
 
                             <div class="form-group">
@@ -136,7 +107,7 @@
                                         <label for="area">Area *</label>
                                     </div>
                                     <div class="col-sm-10">
-                                        <select class="form-control" id="area" required>
+                                        <select class="form-control" id="area" name="area" required>
                                             <option selected></option>
                                             <option value="1">Administración</option>
                                             <option value="2">Secretaría</option>
@@ -151,19 +122,18 @@
 
                             <div class="form-group">
                                 <label for="descripcion">Descripción *</label>
-                                <textarea class="form-control" id="descripcion" rows="3" required></textarea>
+                                <textarea class="form-control" name="descripcion" id="descripcion" rows="3" required></textarea>
                             </div>
 
                             <div class="mb-3 row">
                                 <div class="col-sm-2"></div>
                                 <div class="col-sm-10">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="boletin">
+                                        <input class="form-check-input" type="checkbox" id="boletin">
                                         <label for="">Deseo recibir boletín informativo</label>
                                     </div>
                                 </div>
                             </div>
-
 
                             <div class="mb-3 row">
                                 <div class="col-sm-2">
@@ -171,23 +141,24 @@
                                 </div>
                                 <div class="col-sm-10">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="rol-profesionall">
+                                        <input class="form-check-input" type="checkbox" id="rol-profesional" name="roles">
                                         <label class="form-check-label" for="rol1">
-                                            Profesional de proyectos- Desarrollador
+                                            Profesional de proyectos - Desarrollador
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="rol-gerente">
+                                        <input class="form-check-input" type="checkbox" id="rol-gerente" name="roles">
                                         <label class="form-check-label" for="rol2">
                                             Gerente estratégico
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="rol-auxiliar">
+                                        <input class="form-check-input" type="checkbox" id="rol-auxiliar" name="roles">
                                         <label class="form-check-label" for="rol3">
-                                            Auxiliar administratico
+                                            Auxiliar administrativo
                                         </label>
                                     </div>
+                                    <label id="roles-error" class="error" for="roles"></label>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -213,10 +184,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-
-    <!-- <script src="js/bootstrap.min.js"
-        integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj"
-        crossorigin="anonymous"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 
     <script src='js/claajax.js'></script>
     <script src='js/main.js'></script>

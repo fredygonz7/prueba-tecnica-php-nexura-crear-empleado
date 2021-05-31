@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `areas` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla empleados_nexura.areas: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla empleados_nexura.areas: ~6 rows (aproximadamente)
 DELETE FROM `areas`;
 /*!40000 ALTER TABLE `areas` DISABLE KEYS */;
 INSERT INTO `areas` (`id`, `nombre`) VALUES
@@ -45,28 +45,28 @@ CREATE TABLE IF NOT EXISTS `empleados` (
   `boletin` int(11) NOT NULL,
   `descripcion` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla empleados_nexura.empleados: ~15 rows (aproximadamente)
+-- Volcando datos para la tabla empleados_nexura.empleados: ~7 rows (aproximadamente)
 DELETE FROM `empleados`;
 /*!40000 ALTER TABLE `empleados` DISABLE KEYS */;
 INSERT INTO `empleados` (`id`, `nombre`, `email`, `sexo`, `area_id`, `boletin`, `descripcion`) VALUES
-	(1, 'Fredy Gonzalez Monterroza', 'fredgonz7@gmail.com', 'M', 1, 1, 'Prueba'),
+	(1, 'Fredy David Gonzalez Monterroza', 'fredgonz7@gmail.com', 'M', 1, 1, 'Prueba'),
 	(2, 'Neira Mercado', 'mercado@gmail.com', 'F', 3, 0, 'Prueba'),
-	(3, 'Juana Martinez', 'juena@gmail.com', 'F', 2, 1, 'Prueba'),
-	(11, 'Fredy Gonzalez', 'fredgonz7@gmail.com', 'M', 1, 1, 'Prueba'),
-	(12, 'Fredy Gonzalez', 'fredgonz7@gmail.com', 'M', 1, 1, 'Prueba'),
-	(13, 'Fredy Gon', 'fredgonz7@gmail.com', 'M', 1, 1, 'Prueba'),
-	(15, 'Neira Mercado', 'neira.mercado7@gmail.com', 'F', 2, 1, 'Prueba'),
-	(16, 'Neira', 'neira.mercado7@gmail.com', 'F', 5, 0, 'prueba'),
-	(17, 'fredy', 'fredgonz7@gmail.com', 'M', 4, 0, '1223');
+	(3, 'Juana Martinez', 'juena@gmail.com', 'F', 2, 0, 'Prueba'),
+	(11, 'David', 'David.Monterroza@gmail.com', 'M', 1, 1, 'Prueba'),
+	(16, 'Neira Mercado', 'neira7@gmail.com', 'F', 5, 0, 'prueba'),
+	(19, 'nombres apellidos', 'correo@xxx.xx', 'M', 3, 1, 'DescripciÃ³n'),
+	(20, 'Fredy David Gonzalez', 'fredy.gonzalez@cecar.edu.co', 'M', 1, 0, '11'),
+	(23, 'nombres apellidos', 'xxxxx@xxx.xx', 'M', 5, 1, 'prueba');
 /*!40000 ALTER TABLE `empleados` ENABLE KEYS */;
 
 -- Volcando estructura para tabla empleados_nexura.empleado_rol
 CREATE TABLE IF NOT EXISTS `empleado_rol` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `empleado_id` int(11) NOT NULL,
   `rol_id` int(11) NOT NULL,
-  PRIMARY KEY (`empleado_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla empleados_nexura.empleado_rol: ~0 rows (aproximadamente)
@@ -79,11 +79,16 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla empleados_nexura.roles: ~0 rows (aproximadamente)
 DELETE FROM `roles`;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` (`id`, `nombre`) VALUES
+	(0, 'No aplica'),
+	(1, 'Profesional de proyectos - Desarrollador'),
+	(2, 'Gerente estrategico'),
+	(3, 'Auxiliar administrativo');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

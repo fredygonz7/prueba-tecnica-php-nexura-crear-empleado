@@ -155,11 +155,14 @@ class ClaSerEmpleado
         // $locobj = json_decode($formulario);
 
         $expresionNombre = "/^([A-Za-zÁÉÍÓÚñáéíóúÑ]{2,15})([\s][A-Za-zÁÉÍÓÚñáéíóúÑ]{2,15}){0,5}$/";
-        $expresionEmail = "/^[a-zA-Z0-9\._-]+@[a-zA-Z0-9-]{2,}[.][a-zA-Z]{2,4}([.][a-zA-Z]{2,4}){0,1}$/";
+        $expresionEmail = "/^[A-z][A-z0-9]{2,250}([\.][A-z0-9]{2,250})*@[A-z0-9]{3,20}[.][A-z]{2,3}([.][A-z]{2}){0,1}$/";
         $expresionSexo = "/^[MF]$/";
         $expresionAreaId = "/^([1-9][0-9]{0,10})$/";
         $expresionDescripcion = "/^([A-Za-zÁÉÍÓÚñáéíóúÑ0-9\-\.]+)([\s][A-Za-zÁÉÍÓÚñáéíóúÑ0-9\-\.]+)*$/";
         $expresionBoletin = "/^[10]$/";
+        // $expresionRolProfesional = "/^[0-3]$/";
+        // $expresionRolGerente = "/^[0-3]$/";
+        // $expresionRolAuxiliar = "/^[0-3]$/";
 
         if ((!isset($locobj->campos->nombre))
             || (empty($locobj->campos->nombre))
@@ -172,6 +175,10 @@ class ClaSerEmpleado
             || (!isset($locobj->campos->descripcion))
             || (empty($locobj->campos->descripcion))
             || (!isset($locobj->campos->boletin))
+
+            // || (!isset($locobj->campos->rolProfesional))
+            // || (!isset($locobj->campos->rolGerente))
+            // || (!isset($locobj->campos->rolAuxiliar))
         ) {
             return false;
         }
@@ -194,6 +201,16 @@ class ClaSerEmpleado
         if (!preg_match($expresionBoletin, $locobj->campos->boletin)) {
             return false;
         }
+
+        // if (!preg_match($expresionRolProfesional, $locobj->campos->rolProfesional)) {
+        //     return false;
+        // }
+        // if (!preg_match($expresionRolGerente, $locobj->campos->rolGerente)) {
+        //     return false;
+        // }
+        // if (!preg_match($expresionRolAuxiliar, $locobj->campos->rolAuxiliar)) {
+        //     return false;
+        // }
         return true;
     }
 }

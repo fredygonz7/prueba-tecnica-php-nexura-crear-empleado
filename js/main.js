@@ -5,12 +5,103 @@ document.getElementById("inicio").addEventListener("click", mostrar_lista_emplea
 
 document.getElementById("crear-empleado-form").addEventListener("submit", function (event) {
     event.preventDefault();
-    if (document.getElementById("nombre-completo").getAttribute("data-empleado") == "")
-        crear_empleado_form();
-    else
-        modificar_empleado_form();
+    if ($("#crear-empleado-form").valid()) {
+        if (document.getElementById("nombre").getAttribute("data-empleado") == "")
+            crear_empleado_form();
+        else
+            modificar_empleado_form();
+    }
 });
 
+
+/**
+ * atributos de referencia de los campos del formulario
+ */
+let nombre;
+let email;
+let sexo;
+let area;
+let descripcion;
+let boletin;
+// let rolProfesional;
+// let rolGerente;
+// let rolAuxiliar;
+function obtenerDatosDelFormulario() {
+    nombre = document.getElementById("nombre").value;
+    email = document.getElementById("email").value;
+    sexo = (document.getElementById("sexoM").checked ? "M" : "F");
+    area = document.getElementById("area").value;
+    descripcion = document.getElementById("descripcion").value;
+    boletin = (document.getElementById("boletin").checked ? "1" : "0");
+    // rolProfesional = (document.getElementById("rol-profesional").checked ? "1" : "0");
+    // rolGerente = (document.getElementById("rol-gerente").checked ? "2" : "0");
+    // rolAuxiliar = (document.getElementById("rol-auxiliar").checked ? "3" : "0");
+}
+
+/**
+ * metodo para validar email
+ */
+$.validator.addMethod("email",
+    function (value, element) {
+        return /^[A-z][A-z0-9]{2,250}([\.][A-z0-9]{2,250})*@[A-z0-9]{3,20}[.][A-z]{2,3}([.][A-z]{2}){0,1}$/.test(value);
+    },
+    "Solo email. xxxx@xxx.xx, xx.xx@xxxxx.xxx.xx"
+);
+/**
+ * Validar campos de formulario
+ */
+$("#crear-empleado-form").validate({
+    rules: {
+        nombre: {
+            required: true,
+            minlength: 3,
+            maxlength: 255
+        },
+        email: {
+            required: true,
+            minlength: 6,
+            maxlength: 255,
+            email: true
+        },
+        area: {
+            required: true,
+            maxlength: 11
+        },
+        descripcion: {
+            required: true,
+        },
+        // boletin: {
+        //     bolean
+        // },
+        sexo: {
+            required: true
+        },
+        roles: {
+            required: true
+        }
+    }
+});
+$(document).ready(function () {
+    jQuery.extend(jQuery.validator.messages, {
+        required: "Este campo es obligatorio.",
+        remote: "Por favor, rellena este campo.",
+        email: "Por favor, escribe una dirección de correo válida",
+        url: "Por favor, escribe una URL válida.",
+        date: "Por favor, escribe una fecha válida.",
+        dateISO: "Por favor, escribe una fecha (ISO) válida.",
+        number: "Por favor, escribe un número entero válido.",
+        digits: "Por favor, escribe sólo dígitos.",
+        creditcard: "Por favor, escribe un número de tarjeta válido.",
+        equalTo: "Por favor, escribe el mismo valor de nuevo.",
+        accept: "Por favor, escribe un valor con una extensión aceptada.",
+        maxlength: jQuery.validator.format("Por favor, no escribas más de {0} caracteres."),
+        minlength: jQuery.validator.format("Por favor, no escribas menos de {0} caracteres."),
+        rangelength: jQuery.validator.format("Por favor, escribe un valor entre {0} y {1} caracteres."),
+        range: jQuery.validator.format("Por favor, escribe un valor entre {0} y {1}."),
+        max: jQuery.validator.format("Por favor, escribe un valor menor o igual a {0}."),
+        min: jQuery.validator.format("Por favor, escribe un valor mayor o igual a {0}.")
+    });
+});
 
 /**
  * esta funcion esta encargada de mostrar el inicio, una tabla con todos los empleados
@@ -92,7 +183,7 @@ function mostrar_empleados_lista_callback(parametroJSON) {
             aEditar.onclick = function () { consultar_empleado_para_modificar(this) };
             columnaModificar.appendChild(aEditar);
             fila.appendChild(columnaModificar);
-            
+
             let columnaEliminar = document.createElement("td");
             let aEliminar = document.createElement("a");
             let iEliminar = document.createElement("i");
@@ -118,7 +209,7 @@ function mostrar_empleados_lista_callback(parametroJSON) {
 
 function mostrar_formulario() {
     $("#crear-empleado-form").trigger("reset");
-    document.getElementById("nombre-completo").setAttribute("data-empleado", "");
+    document.getElementById("nombre").setAttribute("data-empleado", "");
     $('#formularioModal').modal('show');
 }
 function ocultar_formulario() {
@@ -126,42 +217,11 @@ function ocultar_formulario() {
 }
 
 /**
- * 
- */
-let nombre;
-let email;
-let sexo;
-let area;
-let descripcion;
-let boletin;
-function obtenerDatosDelFormulario() {
-    nombre = document.getElementById("nombre-completo").value;
-    email = document.getElementById("email").value;
-    sexo = (document.getElementById("sexoM").checked ? "M" : "F");
-    area = document.getElementById("area").value;
-    descripcion = document.getElementById("descripcion").value;
-    boletin = (document.getElementById("boletin").checked ? "1" : "0");
-}
-
-
-
-/**
  * submit del formulario crear empleado
  */
-
 function crear_empleado_form() {
 
     console.log("crear empleado form")
-    // let nombre = document.getElementById("nombre-completo").value;
-    // let email = document.getElementById("email").value;
-    // let sexo = (document.getElementById("sexoM").checked ? "M" : "F");
-    // let area = document.getElementById("area").value;
-    // let descripcion = document.getElementById("descripcion").value;
-    // let boletin = (document.getElementById("sexoM").checked ? "1" : "0");
-
-    // let rolProfesionall = (document.getElementById("rol-profesionall").checked ? "1" : "");
-    // let rolGerente = (document.getElementById("rol-gerente").checked ? "2" : "");
-    // let rolAuxiliar = (document.getElementById("rol-auxiliar").checked ? "3" : "");
     obtenerDatosDelFormulario();
 
     const data = {
@@ -173,7 +233,10 @@ function crear_empleado_form() {
             sexo,
             area,
             descripcion,
-            boletin
+            boletin,
+            // rolProfesional,
+            // rolGerente,
+            // rolAuxiliar,
         }
     }
     const parJSON = 'parjson=' + JSON.stringify(data);
@@ -266,7 +329,7 @@ function respuesta_consultar_empleado_para_modificar(parametroJSON) {
  */
 function cargar_empleado_en_form({ datos }) {
     mostrar_formulario();
-    let nombre = document.getElementById("nombre-completo")
+    let nombre = document.getElementById("nombre")
     nombre.value = datos.nombre;
     nombre.setAttribute("data-empleado", datos.id);
     document.getElementById("email").value = datos.email;
@@ -292,13 +355,16 @@ function modificar_empleado_form() {
             objeto: "empleado",
             metodo: "actualizar",
             campos: {
-                id: document.getElementById("nombre-completo").getAttribute("data-empleado"),
+                id: document.getElementById("nombre").getAttribute("data-empleado"),
                 nombre,
                 email,
                 sexo,
                 area,
                 descripcion,
                 boletin,
+                // rolProfesional,
+                // rolGerente,
+                // rolAuxiliar,
             }
         }
         const parJSON = 'parjson=' + JSON.stringify(data);
@@ -306,7 +372,7 @@ function modificar_empleado_form() {
     }
 }
 function respuesta_modificar_empleado(parametroJSON) {
-    console.log("parametroJSON",parametroJSON);
+    console.log("parametroJSON", parametroJSON);
     try {
         locobj = JSON.parse(parametroJSON);
         if (locobj.estado == "1") {

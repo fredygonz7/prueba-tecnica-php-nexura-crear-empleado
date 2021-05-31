@@ -135,7 +135,8 @@ class Empleado
     function listar_empleados()
     {
         // $query = "SELECT * FROM empleados";
-        $query = "SELECT  empleados.id, empleados.nombre, empleados.email, empleados.sexo, 
+        $query = "SELECT  empleados.id, empleados.nombre, empleados.email, 
+            IF ( empleados.sexo = 'M', 'Masculino', 'Femenino' ) AS sexo, 
             areas.nombre as area_id, empleados.boletin, empleados.descripcion 
             FROM  empleados
             LEFT JOIN areas ON empleados.area_id = areas.id";
