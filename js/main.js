@@ -1,11 +1,9 @@
 mostrar_lista_empleados_inicio();
-//mostrar_formulario_empleado();
 document.getElementById("inicio").addEventListener("click", mostrar_lista_empleados_inicio);
-// document.getElementById("mostrar-formulario-empleado").addEventListener("click", mostrar_formulario_empleado);
 
-document.getElementById("crear-empleado-form").addEventListener("submit", function (event) {
+document.getElementById("empleado-form").addEventListener("submit", function (event) {
     event.preventDefault();
-    if ($("#crear-empleado-form").valid()) {
+    if ($("#empleado-form").valid()) {
         if (document.getElementById("nombre").getAttribute("data-empleado") == "")
             crear_empleado_form();
         else
@@ -23,9 +21,9 @@ let sexo;
 let area;
 let descripcion;
 let boletin;
-// let rolProfesional;
-// let rolGerente;
-// let rolAuxiliar;
+let rolProfesional;
+let rolGerente;
+let rolAuxiliar;
 function obtenerDatosDelFormulario() {
     nombre = document.getElementById("nombre").value;
     email = document.getElementById("email").value;
@@ -33,9 +31,9 @@ function obtenerDatosDelFormulario() {
     area = document.getElementById("area").value;
     descripcion = document.getElementById("descripcion").value;
     boletin = (document.getElementById("boletin").checked ? "1" : "0");
-    // rolProfesional = (document.getElementById("rol-profesional").checked ? "1" : "0");
-    // rolGerente = (document.getElementById("rol-gerente").checked ? "2" : "0");
-    // rolAuxiliar = (document.getElementById("rol-auxiliar").checked ? "3" : "0");
+    rolProfesional = (document.getElementById("rol-profesional").checked ? "1" : "0");
+    rolGerente = (document.getElementById("rol-gerente").checked ? "2" : "0");
+    rolAuxiliar = (document.getElementById("rol-auxiliar").checked ? "3" : "0");
 }
 
 /**
@@ -50,7 +48,7 @@ $.validator.addMethod("email",
 /**
  * Validar campos de formulario
  */
-$("#crear-empleado-form").validate({
+$("#empleado-form").validate({
     rules: {
         nombre: {
             required: true,
@@ -70,9 +68,6 @@ $("#crear-empleado-form").validate({
         descripcion: {
             required: true,
         },
-        // boletin: {
-        //     bolean
-        // },
         sexo: {
             required: true
         },
@@ -108,15 +103,11 @@ $(document).ready(function () {
  * 
  */
 function mostrar_lista_empleados_inicio() {
-
-    //ClaseAJAX.loadDoc("include/tabla-lista-empleados.html", "main");
-    // const objJSON = 'parjson={"objeto": "empleado", "metodo": "listar_empleados"}';
     const objJSON = {
         objeto: "empleado",
         metodo: "listar_empleados"
     }
     const parJSON = 'parjson=' + JSON.stringify(objJSON);
-    // console.log(parJSON,'parjson');
 
     ClaseAJAX.solicitar_url("./php/servidor.php", "POST", parJSON, mostrar_empleados_lista_callback);
 }
@@ -133,8 +124,6 @@ function mostrar_empleados_lista_callback(parametroJSON) {
         alert("Datos inesperados del servidor");
         return false;
     }
-    // console.log(locobj.mensaje, "  -  ", locobj.estado, "  -  length", locobj.datos.length, "  -  ", locobj.datos[0]);
-    // return;
     if (locobj.estado == "1") {
         let tbody = document.getElementById("empleados-lista-tbody");
         while (tbody.hasChildNodes()) {
@@ -170,7 +159,6 @@ function mostrar_empleados_lista_callback(parametroJSON) {
                 }
                 td.appendChild(text);
                 fila.appendChild(td);
-                // fila.appendChild(document.createElement("td").appendChild(document.createTextNode(locobj.datos[i][element])));
             });
 
             let columnaModificar = document.createElement("td");
@@ -208,7 +196,7 @@ function mostrar_empleados_lista_callback(parametroJSON) {
 }
 
 function mostrar_formulario() {
-    $("#crear-empleado-form").trigger("reset");
+    $("#empleado-form").trigger("reset");
     document.getElementById("nombre").setAttribute("data-empleado", "");
     $('#formularioModal').modal('show');
 }
@@ -220,8 +208,6 @@ function ocultar_formulario() {
  * submit del formulario crear empleado
  */
 function crear_empleado_form() {
-
-    console.log("crear empleado form")
     obtenerDatosDelFormulario();
 
     const data = {
@@ -234,20 +220,19 @@ function crear_empleado_form() {
             area,
             descripcion,
             boletin,
-            // rolProfesional,
-            // rolGerente,
-            // rolAuxiliar,
+            rolProfesional,
+            rolGerente,
+            rolAuxiliar,
         }
     }
     const parJSON = 'parjson=' + JSON.stringify(data);
-
     ClaseAJAX.solicitar_url("./php/servidor.php", "POST", parJSON, respuesta_crear_empleado);
 }
 function respuesta_crear_empleado(parametroJSON) {
     try {
         locobj = JSON.parse(parametroJSON);
         if (locobj.estado == "1") {
-            $("#crear-empleado-form").trigger("reset");
+            $("#empleado-form").trigger("reset");
             ocultar_formulario();
             alert(locobj.mensaje);
             mostrar_lista_empleados_inicio();
@@ -323,7 +308,7 @@ function respuesta_consultar_empleado_para_modificar(parametroJSON) {
 }
 
 /**
- * carga los datos del empleado consultado
+ * carga los datos del empleado consultado para su creacion o modificacion
  *
  * @param {json} parametroJSON
  */
@@ -336,12 +321,27 @@ function cargar_empleado_en_form({ datos }) {
     document.getElementById("area").value = datos.area_id;
     descripcion = document.getElementById("descripcion").value = datos.descripcion;
 
+    boletin = document.getElementById("boletin");
+    
+    rolProfesional = document.getElementById("rol-profesional");
+    rolGerente = document.getElementById("rol-gerente");
+    rolAuxiliar = document.getElementById("rol-auxiliar");
+
     if (datos.sexo == "M")
         document.getElementById("sexoM").checked = true;
     else
         document.getElementById("sexoF").checked = true;
 
-    (datos.boletin == "1" ? document.getElementById("boletin").checked = true : document.getElementById("boletin").checked = false);
+    (datos.boletin == "1" ? boletin.checked = true : boletin.checked = false);
+
+    (datos.rolProfesional == "1" ? rolProfesional.checked = true : rolProfesional.checked = false);
+    (datos.rolGerente == "2" ? rolGerente.checked = true : rolGerente.checked = false);
+    (datos.rolAuxiliar == "3" ? rolAuxiliar.checked = true : rolAuxiliar.checked = false);
+
+    // cargar id de roles
+    rolProfesional.setAttribute("id-rol-profesional", datos.idRolProfesional);
+    rolGerente.setAttribute("id-rol-gerente", datos.idRolGerente);
+    rolAuxiliar.setAttribute("id-rol-auxiliar", datos.idRolAuxiliar);
 }
 
 /**
@@ -362,9 +362,12 @@ function modificar_empleado_form() {
                 area,
                 descripcion,
                 boletin,
-                // rolProfesional,
-                // rolGerente,
-                // rolAuxiliar,
+                rolProfesional,
+                rolGerente,
+                rolAuxiliar,
+                idRolProfesional: document.getElementById("rol-profesional").getAttribute("id-rol-profesional"),
+                idRolGerente: document.getElementById("rol-gerente").getAttribute("id-rol-gerente"),
+                idRolAuxiliar: document.getElementById("rol-auxiliar").getAttribute("id-rol-auxiliar"),
             }
         }
         const parJSON = 'parjson=' + JSON.stringify(data);
@@ -372,11 +375,10 @@ function modificar_empleado_form() {
     }
 }
 function respuesta_modificar_empleado(parametroJSON) {
-    console.log("parametroJSON", parametroJSON);
     try {
         locobj = JSON.parse(parametroJSON);
         if (locobj.estado == "1") {
-            document.getElementById("crear-empleado-form").reset();
+            document.getElementById("empleado-form").reset();
             alert(locobj.mensaje);
             ocultar_formulario()
             mostrar_lista_empleados_inicio();

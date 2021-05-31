@@ -45,7 +45,12 @@ class ClaSerEmpleado
                         "descripcion"   => $locobj->campos->descripcion,
                         "boletin"       => $locobj->campos->boletin
                     );
-                    return $empleado->crear($registro);
+                    $registroRoles = array(
+                        $locobj->campos->rolProfesional,
+                        $locobj->campos->rolGerente,
+                        $locobj->campos->rolAuxiliar
+                    );
+                    return $empleado->crear($registro, $registroRoles);
                 } else {
                     return json_encode(array("estado" => "0", "mensaje" => "Error, verifique los campos"));
                 }
@@ -62,9 +67,21 @@ class ClaSerEmpleado
                             $locobj->campos->descripcion,
                             $locobj->campos->boletin
                         );
+                        $registroRoles = array(
+                            $locobj->campos->rolProfesional,
+                            $locobj->campos->rolGerente,
+                            $locobj->campos->rolAuxiliar
+                        );
+                        $registroIdRoles = array(
+                            $locobj->campos->idRolProfesional,
+                            $locobj->campos->idRolGerente,
+                            $locobj->campos->idRolAuxiliar
+                        );
                         return $empleado->actualizar(
                             $registro,
-                            $locobj->campos->id
+                            $locobj->campos->id,
+                            $registroRoles,
+                            $registroIdRoles
                         );
                     } else {
                         return json_encode(array("estado" => "0", "mensaje" => "Error, verifique los campos"));
@@ -106,7 +123,7 @@ class ClaSerEmpleado
      */
     function validar_campo_id($locobj)
     {
-        // probar dato de formulario id
+        // validar dato de formulario id
         // $formulario = '{"campos":""}';
         // $formulario = '{"campos":{"id":"0"}}';
         // $locobj = json_decode($formulario);
@@ -158,11 +175,11 @@ class ClaSerEmpleado
         $expresionEmail = "/^[A-z][A-z0-9]{2,250}([\.][A-z0-9]{2,250})*@[A-z0-9]{3,20}[.][A-z]{2,3}([.][A-z]{2}){0,1}$/";
         $expresionSexo = "/^[MF]$/";
         $expresionAreaId = "/^([1-9][0-9]{0,10})$/";
-        $expresionDescripcion = "/^([A-Za-zÁÉÍÓÚñáéíóúÑ0-9\-\.]+)([\s][A-Za-zÁÉÍÓÚñáéíóúÑ0-9\-\.]+)*$/";
+        $expresionDescripcion = "/^([A-Za-zÁÉÍÓÚñáéíóúÑ0-9\-\.\,\;]+)([\s][A-Za-zÁÉÍÓÚñáéíóúÑ0-9\-\.\,\;]+)*$/";
         $expresionBoletin = "/^[10]$/";
-        // $expresionRolProfesional = "/^[0-3]$/";
-        // $expresionRolGerente = "/^[0-3]$/";
-        // $expresionRolAuxiliar = "/^[0-3]$/";
+        $expresionRolProfesional = "/^[0-3]$/";
+        $expresionRolGerente = "/^[0-3]$/";
+        $expresionRolAuxiliar = "/^[0-3]$/";
 
         if ((!isset($locobj->campos->nombre))
             || (empty($locobj->campos->nombre))
@@ -176,9 +193,9 @@ class ClaSerEmpleado
             || (empty($locobj->campos->descripcion))
             || (!isset($locobj->campos->boletin))
 
-            // || (!isset($locobj->campos->rolProfesional))
-            // || (!isset($locobj->campos->rolGerente))
-            // || (!isset($locobj->campos->rolAuxiliar))
+            || (!isset($locobj->campos->rolProfesional))
+            || (!isset($locobj->campos->rolGerente))
+            || (!isset($locobj->campos->rolAuxiliar))
         ) {
             return false;
         }
@@ -202,15 +219,15 @@ class ClaSerEmpleado
             return false;
         }
 
-        // if (!preg_match($expresionRolProfesional, $locobj->campos->rolProfesional)) {
-        //     return false;
-        // }
-        // if (!preg_match($expresionRolGerente, $locobj->campos->rolGerente)) {
-        //     return false;
-        // }
-        // if (!preg_match($expresionRolAuxiliar, $locobj->campos->rolAuxiliar)) {
-        //     return false;
-        // }
+        if (!preg_match($expresionRolProfesional, $locobj->campos->rolProfesional)) {
+            return false;
+        }
+        if (!preg_match($expresionRolGerente, $locobj->campos->rolGerente)) {
+            return false;
+        }
+        if (!preg_match($expresionRolAuxiliar, $locobj->campos->rolAuxiliar)) {
+            return false;
+        }
         return true;
     }
 }
